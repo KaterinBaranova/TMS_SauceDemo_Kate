@@ -12,11 +12,7 @@ import pages.ShoppingCartPage;
 
 import java.util.List;
 
-import static pages.CheckoutPage.CONTINUE_BUTTON;
-import static pages.CheckoutPage.FINISH_BUTTON;
-
-
-public class CheckoutTests extends BaseTest {
+public class CheckoutTest extends BaseTest {
 
     private final static String BACKPACK_ITEM_NAME = "Sauce Labs Backpack";
     private final static String FIRSTNAME = "Kate";
@@ -33,12 +29,22 @@ public class CheckoutTests extends BaseTest {
         loginPage.login(USERNAME, PASSWORD);
         productsPage = new ProductsPage(driver) {
             @Override
-            public Object isPageOpened() {
-                return null;
+            public boolean isPageOpened() {
+                return Boolean.parseBoolean(null);
             }
 
             @Override
             public List<String> getProductName() {
+                return null;
+            }
+
+            @Override
+            public ShoppingCartPage open() {
+                return null;
+            }
+
+            @Override
+            public List<String> getSelectOption() {
                 return null;
             }
 
@@ -53,7 +59,22 @@ public class CheckoutTests extends BaseTest {
             }
         };
         shoppingcartPage = new ShoppingCartPage(driver);
+        checkoutPage = new CheckoutPage(driver) {
+            @Override
+            public ShoppingCartPage open() {
+                return null;
+            }
 
+            @Override
+            public void confirmOrder(String Kate, String Smith, String zipCode) {
+                super.confirmOrder(Kate, Smith, "100200");
+            }
+
+            @Override
+            public void confirmOrder(String firstname) {
+
+            }
+        };
 
     }
 
@@ -63,17 +84,27 @@ public class CheckoutTests extends BaseTest {
         driver.manage().deleteAllCookies();
     }
 
-    @Test
+    @Test (enabled = false)
     public void checkOutTest() {
         productsPage.openProductDetails(BACKPACK_ITEM_NAME);
         productsPage.clickAddToCartButton(BACKPACK_ITEM_NAME);
         shoppingcartPage.openShoppingCart();
-        checkoutPage.confirmOrder (FIRSTNAME);
-        checkoutPage.confirmOrder (LASTNAME);
-        checkoutPage.confirmOrder (ZIPCODE);
-        CheckoutPage.clickconfirmOrder(CONTINUE_BUTTON);
-        CheckoutPage.clickconfirmOrder(FINISH_BUTTON);
+        shoppingcartPage.clickCheckoutButton();
+        /*checkoutPage.confirmOrder(FIRSTNAME);
+        checkoutPage.confirmOrder(LASTNAME);
+        checkoutPage.confirmOrder(ZIPCODE);*/ //не срабвтывет
+        WebElement firstName = driver.findElement(By.cssSelector("#first-name"));
+        firstName.sendKeys("Kate");
+        WebElement lastName = driver.findElement(By.cssSelector("[data-test=lastName]"));
+        lastName.sendKeys("Smith");
+        WebElement postalCode = driver.findElement(By.cssSelector("#postal-code"));
+        postalCode.sendKeys("100200");
+        WebElement continueButton = driver.findElement(By.cssSelector("#continue"));
+        continueButton.click();
+        WebElement finishButton = driver.findElement(By.cssSelector("#finish"));
+        finishButton.click();
         WebElement thanksMessage = driver.findElement(By.xpath("//h2[text()='THANK YOU FOR YOUR ORDER']"));
         Assert.assertTrue(thanksMessage.isDisplayed());
+
     }
 }

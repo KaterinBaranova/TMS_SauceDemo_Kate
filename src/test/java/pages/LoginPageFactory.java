@@ -1,64 +1,123 @@
 package pages;
 
-import org.openqa.selenium.By;
+
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
-public abstract class LoginPageFactory extends BasePage {
+import static com.google.gson.internal.bind.TypeAdapters.URL;
 
-    private final static String URL = "https://www.saucedemo.com/";
+public class LoginPageFactory extends BasePage {
 
-    @FindBy (id="user-name")
+    @FindBy(id = "user-name")
     private WebElement usernameInput;
-
-    @FindBy (id="password")
+    @FindBy(id = "password")
     private WebElement passwordInput;
-
-    @FindBy(id="login-button")
+    @FindBy(id = "login-button")
     private WebElement loginButton;
-
-
-    @FindBy(css="[data-test=error]")
+    @FindBy(css = "[data-test=er ror]")
     private WebElement errorMessage;
 
-    public LoginPageFactory(WebDriver driver){
+
+    public LoginPageFactory(WebDriver driver) {
         super(driver);
+        PageFactory.initElements(driver, this);
     }
 
-    public void open() {
-        driver.get(URL);
+    @Override
+    public void clickBackToProductsPage() {
+
     }
 
+    @Override
+    public void clickBackToProducts() {
+
+    }
+
+    @Override
+    public boolean isPageOpened() {
+        return false;
+    }
+
+    @Override
+    public void selectOption(String s) {
+
+    }
+
+    @Override
+    public List<String> getProductDetails() {
+        return null;
+    }
+
+    @Override
+    public List<String> getProductName() {
+        return null;
+    }
+
+    @Override
+    public ShoppingCartPage open() {
+        return null;
+    }
+
+/*    @Override
+    public ShoppingCartPage open() {
+        driver.get(String.valueOf(URL));
+        return new LoginPage(driver) {
+            @Override
+            public void clickBackToProductsPage() {
+
+            }
+
+            @Override
+            public void clickBackToProducts() {
+
+            }
+
+            @Override
+            public boolean isPageOpened() {
+                return false;
+            }
+
+            @Override
+            public List<String> getProductName() {
+                return null;
+            }
+
+            @Override
+            public void selectOption(String s) {
+
+            }
+
+            @Override
+            public List<String> getProductDetails() {
+                return null;
+            }
+        };
+    }*/
+
+    @Step("Login to Saucedemo.com with username {username} and password {password}")
+    public void login(String username, String password) {
+        usernameInput.sendKeys(username);
+        waitForPasswordInputClickable();
+        passwordInput.sendKeys(password);
+        waitUntilElementClickable(loginButton);
+        loginButton.click();
+    }
+
+    public void waitForPasswordInputClickable() {
+        waitUntilElementClickable(passwordInput);
+    }
 
     public String getErrorMessageText() {
-        return driver.findElement((By) errorMessage).getText();
+        return errorMessage.getText();
     }
 
     public boolean isErrorMessageDisplayed() {
-        return driver.findElement((By) errorMessage).isDisplayed();
+        return errorMessage.isDisplayed();
     }
 
-    public void login(String username, String password) {
-        driver.findElement((By) usernameInput).sendKeys(username);
-        driver.findElement((By) passwordInput).sendKeys(password);
-        driver.findElement((By) loginButton).click();
-    }
-
-    public abstract void clickBackToProductsPage();
-
-    public abstract void clickBackToProducts();
-
-/*
-    @Override
-    public boolean isPageOpened();{
-        return false;
-    }
-*/
-
-    public abstract List<String> getProductName();
 }
-
-

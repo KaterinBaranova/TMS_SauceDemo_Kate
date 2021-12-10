@@ -9,7 +9,7 @@ import pages.ProductsPage;
 
 import java.util.List;
 
-public class ShoppingCartTests extends BaseTest {
+public class ShoppingCartTest extends BaseTest {
 
     private final static String CART_PAGE_URL = "https://www.saucedemo.com/cart.html";
     private final static String BACKPACK_ITEM_NAME = "Sauce Labs Backpack";
@@ -34,8 +34,8 @@ public class ShoppingCartTests extends BaseTest {
             }
 
             @Override
-            public Object isPageOpened() {
-                return null;
+            public boolean isPageOpened() {
+                return Boolean.parseBoolean(null);
             }
 
             @Override
@@ -45,6 +45,16 @@ public class ShoppingCartTests extends BaseTest {
 
             @Override
             public List<String> getProductName() {
+                return null;
+            }
+
+            @Override
+            public ShoppingCartPage open() {
+                return null;
+            }
+
+            @Override
+            public List<String> getSelectOption() {
                 return null;
             }
         };
@@ -57,7 +67,7 @@ public class ShoppingCartTests extends BaseTest {
     }
 
 
-    @Test
+    @Test (description="SauceDemo positive cart test",groups = {"Smoke"})
     public void shoppingCartPositiveTest() {
         productsPage.clickAddToCartButton(BACKPACK_ITEM_NAME);
         shoppingCartPage.openShoppingCart();
