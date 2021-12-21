@@ -5,7 +5,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-public class LoginTests extends BaseTest {
+public class LoginTest extends BaseTest {
 
     private final static String LOGIN_PAGE_URL = "https://www.saucedemo.com/";
     private final static String INVALID_USERNAME = "user_name";
