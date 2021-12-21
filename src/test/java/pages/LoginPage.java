@@ -18,8 +18,9 @@ public abstract class LoginPage extends BasePage {
         super(driver);
     }
 
-    public void open() {
+    public ShoppingCartPage open() {
         driver.get(URL);
+        return null;
     }
 
 
@@ -41,7 +42,7 @@ public abstract class LoginPage extends BasePage {
 
     public abstract void clickBackToProducts();
 
-    public abstract Object isPageOpened();
+    public abstract boolean isPageOpened();
 
     public abstract List<String> getProductName();
 }
