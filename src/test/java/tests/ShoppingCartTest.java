@@ -9,7 +9,7 @@ import pages.ProductsPage;
 
 import java.util.List;
 
-public class ShoppingCartTests extends BaseTest {
+public class ShoppingCartTest extends BaseTest {
 
     private final static String CART_PAGE_URL = "https://www.saucedemo.com/cart.html";
     private final static String BACKPACK_ITEM_NAME = "Sauce Labs Backpack";

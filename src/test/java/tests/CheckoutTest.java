@@ -16,7 +16,7 @@ import static pages.CheckoutPage.CONTINUE_BUTTON;
 import static pages.CheckoutPage.FINISH_BUTTON;
 
 
-public class CheckoutTests extends BaseTest {
+public class CheckoutTest extends BaseTest {
 
     private final static String BACKPACK_ITEM_NAME = "Sauce Labs Backpack";
     private final static String FIRSTNAME = "Kate";
